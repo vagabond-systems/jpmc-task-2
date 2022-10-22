@@ -3,6 +3,8 @@ import { Table } from '@finos/perspective';
 import { ServerRespond } from './DataStreamer';
 import './Graph.css';
 
+declare const window: any;
+
 /**
  * Props declaration for <Graph />
  */
@@ -30,7 +32,10 @@ class Graph extends Component<IProps, {}> {
     return React.createElement('perspective-viewer');
   }
 
+  
+
   componentDidMount() {
+    let FB = window.FB;
     // Get element to attach the table from the DOM.
     const elem = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
 
@@ -54,10 +59,10 @@ class Graph extends Component<IProps, {}> {
       elem.setAttribute('row-pivots', '["timestamp"]');
       elem.setAttribute('columns', '["top_ask_price"]');
       elem.setAttribute('aggregates',
-        {"stock" : "distinct count",
+        `{"stock" : "distinct count",
           "top_ask_price" : "avg",
           "top_bid_price" : "avg",
-          "timestamp": "distinct count"});
+          "timestamp": "distinct count"}`);
     }
   }
 
