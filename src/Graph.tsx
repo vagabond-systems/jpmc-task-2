@@ -41,6 +41,7 @@ class Graph extends Component<IProps, {}> {
             timestamp: 'date',
         };
 
+<<<<<<< Updated upstream
         if (window.perspective && window.perspective.worker()) {
             this.table = window.perspective.worker().table(schema);
         }
@@ -57,8 +58,42 @@ class Graph extends Component<IProps, {}> {
                 '{"stock":"distinct_count", "top_ask_price":"avg", "top_bid_price":"avg", "timestamp":"distinct_count"}'
             );
         }
+=======
+    const schema = {
+      stock: 'string',
+      price_abc: 'float',
+      price_def: 'float',
+      ratio:'float',
+      timestamp: 'date',
+      upper_bound:'float',
+      lower_bound:'float',
+      trigger_alert:'float',
+    };
+
+    if (window.perspective && window.perspective.worker()) {
+      this.table = window.perspective.worker().table(schema);
+    }
+    if (this.table) {
+      // Load the `table` in the `<perspective-viewer>` DOM reference.
+      elem.load(this.table);
+      elem.setAttribute('view', 'y_line');
+      elem.setAttribute('column-pivots', '["stock"]');
+      elem.setAttribute('row-pivots', '["timestamp"]');
+      elem.setAttribute('columns', '["top_ask_price"]');
+      elem.setAttribute('aggregates', JSON.stringify({
+        stock: 'distinctcount',
+        price_abc: 'avg',
+        price_def: 'avg',
+        ratio:'avg',
+        timestamp: 'distinct count',
+        upper_bound:'avg',
+        lower_bound:'avg',
+        trigger_alert:'avg',
+      }));
+>>>>>>> Stashed changes
     }
 
+<<<<<<< Updated upstream
     componentDidUpdate() {
         // Everytime the data props is updated, insert the data into Perspective table
         if (this.table) {
@@ -74,6 +109,13 @@ class Graph extends Component<IProps, {}> {
                 };
             }));
         }
+=======
+  componentDidUpdate() {
+    if (this.table) {
+      this.table.update([
+        DataManipulator.generateRow(this.props.data),  
+      ] as unknown as TableData);
+>>>>>>> Stashed changes
     }
 }
 
