@@ -18,10 +18,10 @@
     "react-scripts": "2.1.3"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "node node_modules/react-scripts/bin/react-scripts start",
+    "build": "node node_modules/react-scripts/bin/react-scripts build",
+    "test": "node node_modules/react-scripts/bin/react-scripts test",
+    "eject": "node node_modules/react-scripts/bin/react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
