@@ -15,6 +15,7 @@ interface IProps {
  * This interface acts as a wrapper for Typescript compiler.
  */
 interface PerspectiveViewerElement extends HTMLElement {
+    //here we extended the interface with HTMLElement   
     load: (table: Table) => void,
 }
 
@@ -32,6 +33,7 @@ class Graph extends Component<IProps, {}> {
 
     componentDidMount() {
         // Get element to attach the table from the DOM.
+        //componentDidMount() method runs
         const elem = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
 
         const schema = {
