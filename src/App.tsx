@@ -9,6 +9,7 @@ import {setInterval} from "timers";
  */
 interface IState {
     data: ServerRespond[],
+    //declared showGraph as a boolean variable
     showGraph: boolean
 }
 
@@ -33,6 +34,7 @@ class App extends Component<{}, IState> {
      */
     renderGraph() {
         if (this.state.showGraph) {
+            //if showGraph is true this condition will satisfy
             return (<Graph data={this.state.data}/>)
         }
     }
@@ -44,6 +46,7 @@ class App extends Component<{}, IState> {
         let x = 0;
         const interval = setInterval(() => {
             DataStreamer.getData((serverResponds: ServerRespond[]) => {
+                //the above line will return callback function
                 this.setState({
                     data: serverResponds,
                     showGraph: true
