@@ -34,16 +34,6 @@ class Graph extends Component<IProps, {}> {
     // Get element to attach the table from the DOM.
     const elem = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
 
-    elem.setAttribute('view','y_line');
-    elem.setAttribute('column-pivots','["stock"]');
-    elem.setAttribute('row-pivots','["timestamp"]');
-    elem.setAttribute('columns','["top_ask_price"]');
-    elem.setAttribute('aggregates',
-    `{"stock":"distinct count",
-    "top_ask_price":"avg",
-    "top_bid_price":"avg",
-    "timestamp":"distinct count"}`);
-
     const schema = {
       stock: 'string',
       top_ask_price: 'float',
@@ -56,7 +46,15 @@ class Graph extends Component<IProps, {}> {
     }
     if (this.table) {
       // Load the `table` in the `<perspective-viewer>` DOM reference.
-
+        elem.setAttribute('view','y_line');
+        elem.setAttribute('column-pivots','["stock"]');
+        elem.setAttribute('row-pivots','["timestamp"]');
+        elem.setAttribute('columns','["top_ask_price"]');
+        elem.setAttribute('aggregates',
+        `{"stock":"distinct count",
+        "top_ask_price":"avg",
+        "top_bid_price":"avg",
+        "timestamp":"distinct count"}`);
       // Add more Perspective configurations here.
       elem.load(this.table);
     }
