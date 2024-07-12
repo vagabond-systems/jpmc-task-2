@@ -1,0 +1,87 @@
+From 3022e1f02670f8336f457078532f98c50f77496e Mon Sep 17 00:00:00 2001
+From: Joe Ferrer <joe@theforage.com>
+Date: Wed, 1 Mar 2023 00:45:20 +1100
+Subject: [PATCH 1/2] Move python files to datafeed dir
+
+---
+ requirements.txt => datafeed/requirements.txt | 0
+ server.py => datafeed/server3.py              | 0
+ datafeed/test.csv                             | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+ rename requirements.txt => datafeed/requirements.txt (100%)
+ rename server.py => datafeed/server3.py (100%)
+ create mode 100644 datafeed/test.csv
+
+diff --git a/requirements.txt b/datafeed/requirements.txt
+similarity index 100%
+rename from requirements.txt
+rename to datafeed/requirements.txt
+diff --git a/server.py b/datafeed/server3.py
+similarity index 100%
+rename from server.py
+rename to datafeed/server3.py
+diff --git a/datafeed/test.csv b/datafeed/test.csv
+new file mode 100644
+index 0000000000..e69de29bb2
+
+From 3f02ce8deda44b4a9124c3d1b6d5855a57403170 Mon Sep 17 00:00:00 2001
+From: Shanmugesh <149296635+shanmugesh-developers@users.noreply.github.com>
+Date: Sun, 7 Jul 2024 21:43:55 +0530
+Subject: [PATCH 2/2] Update App.tsx
+
+---
+ src/App.tsx | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/src/App.tsx b/src/App.tsx
+index 0728518c0d..04d25250d4 100755
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -8,6 +8,7 @@ import './App.css';
+  */
+ interface IState {
+   data: ServerRespond[],
++  showGraph:boolean,
+ }
+ 
+ /**
+@@ -19,9 +20,11 @@ class App extends Component<{}, IState> {
+     super(props);
+ 
+     this.state = {
++      
+       // data saves the server responds.
+       // We use this state to parse data down to the child element (Graph) as element property
+       data: [],
++      showGraph:false,
+     };
+   }
+ 
+@@ -29,13 +32,26 @@ class App extends Component<{}, IState> {
+    * Render Graph react component with state.data parse as property data
+    */
+   renderGraph() {
++    if(this.state.showGraph){
+     return (<Graph data={this.state.data}/>)
+   }
+-
++  }
+   /**
+    * Get new data from server and update the state with the new data
+    */
+   getDataFromServer() {
++    let x=0
++    const interval=setInterval(()=>{
++      DataStreamer.getData((serverResponds:ServerRespond[])=>{
++        this.setState({
++          data:serverResponds,
++          showGraph:true});
++      });
++      x++;
++      if(x>1000){
++      clearInterval(interval);
++      }
++    },100)
+     DataStreamer.getData((serverResponds: ServerRespond[]) => {
+       // Update the state by creating a new array of data that consists of
+       // Previous data in the state and the new data from server
